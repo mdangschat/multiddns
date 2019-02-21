@@ -1,0 +1,23 @@
+{
+  "server": {
+    "name": "some.example.com",
+    "port": 12345,
+    "update_url": "http://localhost/?myip={ip:s}"
+    "username": "SERVER_USERNAME",
+    "password": "SERVER_PASSWORD"
+  },
+  "update_servers": [
+    {
+      "name": "some.example.com",
+      "update_url": "https://update.ddns-example-server.com/?myip={ip:s}",
+      "username": "USERNAME1",
+      "password": "PASSWORD1"
+  },
+  {
+      "name": "other.example.com",
+      "update_url": "https://update.ddns-example-server.com/?myip={ip:s}",
+      "username": "USERNAME2",
+      "password": "PASSWORD2"
+    }
+  ]
+}
