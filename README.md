@@ -5,4 +5,5 @@ Therefore I run this script on my (local) server, my FritzBox sends an update to
 in turn updates multiple other DDNS entries.
 
 ## Security Notes
-Currently the server does not provide any encryption, so do not use this over the internet! 
+* Currently the server does not provide any encryption, so do not use this over the internet!
+* Update service credentials are stored in plaintext. 
