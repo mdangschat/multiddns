@@ -40,4 +40,3 @@ if __name__ == '__main__':
     # Update servers via the local update server.
     server_config['update_url'] = 'http://localhost:48234/?myip={ip:s}'
     update_ip(server_config, __ip)
-    pass
