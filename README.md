@@ -6,7 +6,10 @@ which in turn updates multiple other DDNS entries.
 
 
 ## Security Notes
-* Currently the server does not provide any encryption, so do not use this over the internet or a "public" intranet!
+* Currently the server does not provide any encryption. 
+  Do not use this over the internet or a "public" intranet!
+  * The option to enable TLS is only for testing, my FritzBox doesn't work with self signed
+    certificates.
 * DDNS service credentials are stored in plaintext.
 
 
