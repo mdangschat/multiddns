@@ -15,6 +15,8 @@ from update.config_loader import get_config
 from update.get_ip import get_ip
 from update.updater import update_ips
 
+
+USE_TLS = False
 key = b''
 update_servers = None
 
@@ -75,12 +77,13 @@ def main():
     # Setup server.
     httpd = ThreadingHTTPServer(('', server_config['port']), DDNSHandler)
 
-    # TLS
-    context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
-    context.load_cert_chain(certfile=server_config['cert'],
-                            keyfile=server_config['key'],
-                            password=server_config['cert_password'])
-    httpd.socket = context.wrap_socket(httpd.socket, server_side=True)
+    # HTTPS
+    if USE_TLS:
+        context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+        context.load_cert_chain(certfile=server_config['cert'],
+                                keyfile=server_config['key'],
+                                password=server_config['cert_password'])
+        httpd.socket = context.wrap_socket(httpd.socket, server_side=True)
 
     # Run server.
     httpd.serve_forever()
