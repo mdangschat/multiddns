@@ -61,10 +61,11 @@ class DDNSHandler(SimpleHTTPRequestHandler):
 
 
 def main():
-    print('[{}] Starting Multi DDNS Update Server.'.format(time.asctime()))
     global key, update_servers
-
     server_config, update_servers = get_config('config.json')
+
+    print('[{}] Starting MultiDDNS update server at port: {}.'.format(
+        time.asctime(), server_config['port']))
 
     # Initial IP update.
     update_ips(update_servers, get_ip())
@@ -73,10 +74,13 @@ def main():
 
     # Setup server.
     httpd = ThreadingHTTPServer(('', server_config['port']), DDNSHandler)
-    httpd.socket = ssl.wrap_socket(httpd.socket,
-                                   keyfile=server_config['key'],
-                                   certfile=server_config['cert'],
-                                   server_side=True)
+
+    # TLS
+    context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+    context.load_cert_chain(certfile=server_config['cert'],
+                            keyfile=server_config['key'],
+                            password=server_config['cert_password'])
+    httpd.socket = context.wrap_socket(httpd.socket, server_side=True)
 
     # Run server.
     httpd.serve_forever()

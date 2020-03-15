@@ -27,3 +27,4 @@ chmod ug+x multiddns/server.py multiddns/update/updater.py
 ```bash
 openssl req -x509 -newkey rsa:4096 -keyout key.pem -out certificate.pem -days 3650
 ```
+(Use a password)

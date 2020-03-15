@@ -4,6 +4,7 @@
     "port": 12345,
     "update_url": "http://localhost/?myip={ip:s}"
     "cert": "/home/user/multiddns/certificate.pem",
+    "cert_password": "CERT_PASSWORD",
     "key": "/home/user/multiddns/key.pem",
     "username": "SERVER_USERNAME",
     "password": "SERVER_PASSWORD"
