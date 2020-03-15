@@ -3,11 +3,11 @@
 """
 Listener script that awaits a DDNS update and triggers an update for all other DDNS servers.
 
-TODO: Add TLS!
 TODO: Implement Logging.
 """
 
 import time
+import ssl
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 from urllib import parse
 
@@ -53,7 +53,6 @@ class DDNSHandler(SimpleHTTPRequestHandler):
             update_ips(update_servers, ip_address)
 
         else:
-            # print("CASE 3: wrong auth")
             self.send_response(401)
             self.send_header('WWW-Authenticate', 'Basic realm=\"Secure Share\"')
             self.send_header('Content-type', 'text/html')
@@ -72,8 +71,14 @@ def main():
 
     key = server_config['credentials']
 
-    # Run server.
+    # Setup server.
     httpd = ThreadingHTTPServer(('', server_config['port']), DDNSHandler)
+    httpd.socket = ssl.wrap_socket(httpd.socket,
+                                   keyfile=server_config['key'],
+                                   certfile=server_config['cert'],
+                                   server_side=True)
+
+    # Run server.
     httpd.serve_forever()
 
 
